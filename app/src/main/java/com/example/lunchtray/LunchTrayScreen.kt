@@ -16,7 +16,10 @@
 package com.example.lunchtray
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -29,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -93,7 +97,9 @@ fun LunchTrayApp() {
                 StartOrderScreen(
                     onStartOrderButtonClicked = {
                         navController.navigate(LunchTrayScreen.Entree.name)
-                    }
+                    },
+                    modifier = Modifier
+                        .fillMaxSize()
                 )
             }
 
@@ -108,7 +114,9 @@ fun LunchTrayApp() {
                     },
                     onSelectionChanged = { item ->
                         viewModel.updateEntree(item)
-                    }
+                    },
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
                 )
             }
 
@@ -123,7 +131,9 @@ fun LunchTrayApp() {
                     },
                     onSelectionChanged = { item ->
                         viewModel.updateSideDish(item)
-                    }
+                    },
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
                 )
             }
 
@@ -138,7 +148,9 @@ fun LunchTrayApp() {
                     },
                     onSelectionChanged = { item ->
                         viewModel.updateAccompaniment(item)
-                    }
+                    },
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
                 )
             }
 
@@ -150,7 +162,13 @@ fun LunchTrayApp() {
                     },
                     onCancelButtonClicked = {
                         navController.navigate(LunchTrayScreen.Start.name)
-                    }
+                    },
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(
+                            start = dimensionResource(R.dimen.padding_medium),
+                            end = dimensionResource(R.dimen.padding_medium)
+                        )
                 )
             }
         }
