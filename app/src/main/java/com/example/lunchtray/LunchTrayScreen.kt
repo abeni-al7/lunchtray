@@ -16,11 +16,18 @@
 package com.example.lunchtray
 
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -29,7 +36,7 @@ import com.example.lunchtray.ui.OrderViewModel
 
 // TODO: Screen enum
 enum class LunchTrayScreen(@StringRes val title: Int) {
-    Start(title = R.string.start_order),
+    Start(title = R.string.app_name),
     Entree(title = R.string.choose_entree),
     SideDish(title = R.string.choose_side_dish),
     Accompaniment(title = R.string.choose_accompaniment),
@@ -53,6 +60,16 @@ fun LunchTrayApp() {
     Scaffold(
         topBar = {
             // TODO: AppBar
+            CenterAlignedTopAppBar(
+                title = { Text(text = stringResource(id = currentScreen.title)) },
+                navigationIcon = {
+                    if (currentScreen.name != LunchTrayScreen.Start.name) {
+                        IconButton(onClick = { navController.navigateUp() }) {
+                            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
+                        }
+                    }
+                },
+            )
         }
     ) { innerPadding ->
         val uiState by viewModel.uiState.collectAsState()
